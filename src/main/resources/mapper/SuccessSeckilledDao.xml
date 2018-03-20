@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.seckill.dao.SuccessSeckilledDao">
+    <!--    SuccessSeckilled对应的ResultMap -->
+    <resultMap id="selectSuccessedSeckill" type="SuccessSeckilled">
+        <result property="seckill_id" column="sk_id"/>
+        <result property="user_phone" column="sk_user_phone"/>
+        <result property="state" column="sk_state"/>
+        <result property="create_time" column="sk_create_time"/>
+        <association property="seckill" javaType="Seckill">
+            <result property="seckill_id" column="s_id"/>
+            <result property="goods_name" column="s_goods_name"/>
+            <result property="num" column="s_num"/>
+            <result property="start_time" column="s_start_time"/>
+            <result property="end_time" column="s_end_time"/>
+            <result property="create_time" column="s_create_time"/>
+        </association>
+    </resultMap>
+    <!--mybatis会自动扫描namespace下所有的类-->
+    <insert id="insertSuccessKilled">
+        <!--    主键冲突时, 忽略报错-->
+        INSERT ignore INTO success_killed(seckill_id, user_phone, state)
+        VALUES (#{seckillId}, #{userPhone}, 0)
+    </insert>
+    <select id="queryByIdWithSeckill" resultMap="selectSuccessedSeckill">
+        <!--根据主键id+username查询SuccessKilled并携带秒杀产品对象实体-
+            复杂查询用ResultMap-->
+        SELECT
+          sk.seckill_id as sk_id,
+          sk.user_phone as sk_user_phone,
+          sk.create_time as sk_create_time,
+          sk.state as sk_state,
+          s.seckill_id  as s_id,
+          s.goods_name  as s_goods_name,
+          s.number as s_number,
+          s.start_time  as s_start_time,
+          s.end_time as s_end_time,
+          s.create_time as s_create_time
+        FROM success_killed sk
+        INNER JOIN  seckill s on s.seckill_id = #{seckillId}
+        WHERE sk.seckill_id = #{seckillId} AND sk.user_phone = #{userPhone}
+    </select>
+</mapper>
