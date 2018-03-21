@@ -3,14 +3,18 @@ package org.seckill.entity;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 订单的实体类
  * 名字要与xml中对应 无需开启驼峰命名
+ * 实现Serializable接口 也可通过其他工具实现序列化 例如Google的protostuff
  */
 @Component
-public class Seckill {
+public class Seckill implements Serializable{
+
+    private static final long serialVersionUID = 697742643848374753L;
     private long seckill_id;
     private String goods_name;
     private int num;

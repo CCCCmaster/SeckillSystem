@@ -15,6 +15,7 @@ import org.seckill.exception.SeckillException;
 import org.seckill.service.SeckillService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,11 +43,24 @@ public class SeckillServiceImpl implements SeckillService {
         return seckillDao.queryAll(0,3);
     }
 
+    /**
+     * 使用@Cacheable定义缓存策略
+     * 当缓存中有值 则返回缓存数据 否则访问方法得到数据
+     * 通过value引用缓存管理器 通过访问key定义键
+     * @param seckillId
+     * @return
+     */
     @Override
+    @Cacheable(value = "cacheManager", key = "'seckill'+ #seckillId")
     public Seckill getById(long seckillId) {
         return seckillDao.queryById(seckillId);
     }
 
+    /**
+     * 暴露秒杀接口
+     * @param seckillId
+     * @return
+     */
     @Override
     public Exposer exportSeckillUrl(long seckillId) {
         Seckill seckill = this.seckillDao.queryById(seckillId);
@@ -123,6 +137,13 @@ public class SeckillServiceImpl implements SeckillService {
         }
     }
 
+    /**
+     * 调用储存过程执行秒杀逻辑
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     */
     @Override
     public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5){
         if(md5 == null || !md5.equals(getMD5(seckillId))){
