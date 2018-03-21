@@ -19,9 +19,11 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * spring整合redis 缓存
+ * Java配置redis
+ * redis相关配置
  */
-@Configuration
-@EnableCaching
+@Configuration // 配置类
+@EnableCaching // 开启缓存
 public class RedisConfig {
     /**
      * 配置redisTemplate
