@@ -5,6 +5,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 /**
  * 使用Google的protostuff序列化工具替代默认的序列化工具
+ * 未完成 待续
  */
 public class ProtobuffRedisSerializer{//<T> implements RedisSerializer<T> {
 
