@@ -7,8 +7,15 @@ import org.seckill.entity.Seckill;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+/**
+ * 使用Google的Protostuff工具实现序列化
+ * 相比实现Serializable接口效率更高
+ * 在高并发的情况下更为实用
+ */
 public class RedisDao {
+    // 连接池
     private JedisPool jedisPool;
+    // 初始化端口 ip
     public RedisDao(String ip, int port){
         jedisPool = new JedisPool(ip, port);
     }
