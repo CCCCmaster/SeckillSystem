@@ -5,6 +5,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.Callable;
 
+/**
+ * 自定义的CacheManager
+ * 未完成 待续
+ */
 public class RedisCacheManager {//implements Cache {
 //    private RedisTemplate redisTemplate;
 //    private String name;
