@@ -1,10 +1,8 @@
 package org.seckill.config;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
-class Demo{
+import java.util.*;
+
+class Demo implements Comparable<Demo>{
     private   String name;
     private  int age;
     public Demo(String name, Integer age){
@@ -30,24 +28,30 @@ class Demo{
                 ", age=" + age +
                 '}';
     }
+
+    @Override
+    public int compareTo(Demo demo) {
+        return this.age > demo.age?-1:1;
+    }
 }
 public class Test {
     public static void main(String[] args) {
 
-        Demo demo = new Demo("Tom",20);
-        Demo demo2 = new Demo("Tom",20);
-        System.out.println(demo.hashCode() == demo2.hashCode());
-        System.out.println(demo.equals(demo2));
-        Map< Demo, String> map = new HashMap<Demo, String>();
-        Map<String, String> map2 = new HashMap<String, String>();
-        map2.put("s","kk");
-        map2.put(new String("s"),"kk2");
-        String s  = "demo";
-        map.put(demo,"demo1");
-        map.put(demo2,"demo2");
-        System.out.println(map.get(demo));
-        System.out.println(map.get(demo2));
-        System.out.println(map.size());
-        System.out.println(map2.size()+map2.get("s"));
+        Map<Demo, String> treemap = new TreeMap<Demo, String>();
+        Demo d1 = new Demo("Tom",20);
+        Demo d2 = new Demo("Jack",18);
+        Demo d3 = new Demo("Mary",21);
+        Demo d4 = new Demo("Tim",11);
+        treemap.put(d1,"21");
+        treemap.put(d2,"1");
+        treemap.put(d3,"v");
+        treemap.put(d4,"a");
+//        treemap.put(d4,null);
+        Collection col = treemap.values();
+        Iterator iterator = col.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+
     }
 }
