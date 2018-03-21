@@ -21,7 +21,6 @@ public class RedisCacheManager implements Cache {
     @Override
     public Object getNativeCache() {
         return redisTemplate;
-
     }
 
     @Override
