@@ -172,6 +172,11 @@ public class SeckillServiceImpl implements SeckillService {
         }
     }
 
+    /**
+     * 生成 MD5值
+     * @param seckillId
+     * @return
+     */
     private String getMD5(long seckillId){
         String base = seckillId + "/" + salt;
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
