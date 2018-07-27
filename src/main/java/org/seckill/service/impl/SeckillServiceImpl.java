@@ -1,7 +1,5 @@
 package org.seckill.service.impl;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_ADDPeer;
-import org.apache.commons.collections.MapUtils;
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessSeckilledDao;
 import org.seckill.dto.Exposer;
@@ -13,7 +11,6 @@ import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
 import org.seckill.exception.SeckillException;
 import org.seckill.service.SeckillService;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,13 +18,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.context.support.ContextExposingHttpServletRequest;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 @Service
 public class SeckillServiceImpl implements SeckillService {
@@ -138,44 +131,9 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     /**
-     * 调用储存过程执行秒杀逻辑
-     * @param seckillId
-     * @param userPhone
-     * @param md5
-     * @return
-     */
-    @Override
-    public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5){
-        if(md5 == null || !md5.equals(getMD5(seckillId))){
-            return new SeckillExecution(seckillId, SeckillStateEnum.DATA_REWRITE);
-
-        }
-        Date killTime = new Date();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("seckillId", seckillId );
-        map.put("phone", userPhone );
-        map.put("killTime", killTime );
-        map.put("result", null );
-        //执行存储过程 result被赋值
-        try{
-            seckillDao.killByProcedure(map);
-            int result = MapUtils.getInteger(map, "result", -2);
-            if(result == 1){
-                SuccessSeckilled sk = successSeckilledDao.
-                        queryByIdWithSeckill(seckillId, userPhone);
-                return new SeckillExecution(seckillId, SeckillStateEnum.SUCCESS);
-            }else {
-                return new SeckillExecution(seckillId, SeckillStateEnum.stateOf(result));
-            }
-        }catch (Exception e){
-            return new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
-        }
-    }
-
-    /**
      * 生成 MD5值
-     * @param seckillId
-     * @return
+     * @param seckillId 秒杀id
+     * @return String md5
      */
     private String getMD5(long seckillId){
         String base = seckillId + "/" + salt;
