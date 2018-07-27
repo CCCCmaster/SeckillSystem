@@ -11,7 +11,7 @@ public interface SuccessSeckilledDao {
      * 插入购买明细 可过滤重复
      * @param seckillId
      * @param userPhone
-     * @return 影响的sql行数 即插入的数量
+     * @return 影响的sql行数,即插入的数量
      */
     int insertSuccessKilled(@Param(value = "seckillId") long seckillId, @Param(value = "userPhone") long userPhone);
 
