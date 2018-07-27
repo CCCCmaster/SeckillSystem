@@ -103,6 +103,13 @@
       <artifactId>jedis</artifactId>
       <version>2.9.0</version>
     </dependency>
+
+    <!-- Rocketmq -->
+    <dependency>
+        <groupId>org.apache.rocketmq</groupId>
+        <artifactId>rocketmq-client</artifactId>
+        <version>4.1.0-incubating</version>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
