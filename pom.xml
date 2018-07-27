@@ -105,11 +105,23 @@
     </dependency>
 
     <!-- Rocketmq -->
-    <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-client</artifactId>
-        <version>4.1.0-incubating</version>
-    </dependency>
+      <dependency>
+          <groupId>org.apache.rocketmq</groupId>
+          <artifactId>rocketmq-client</artifactId>
+          <version>4.1.0-incubating</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-store -->
+      <dependency>
+          <groupId>org.apache.rocketmq</groupId>
+          <artifactId>rocketmq-store</artifactId>
+          <version>4.1.0-incubating</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-broker -->
+      <dependency>
+          <groupId>org.apache.rocketmq</groupId>
+          <artifactId>rocketmq-broker</artifactId>
+          <version>4.1.0-incubating</version>
+      </dependency>
   </dependencies>
 
   <dependencyManagement>
