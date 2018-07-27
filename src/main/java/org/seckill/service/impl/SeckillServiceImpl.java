@@ -48,7 +48,7 @@ public class SeckillServiceImpl implements SeckillService {
      * 当缓存中有值 则返回缓存数据 否则访问方法得到数据
      * 通过value引用缓存管理器 通过访问key定义键
      * @param seckillId
-     * @return
+     * @return Seckill
      */
     @Override
     @Cacheable(value = "cacheManager", key = "'seckill'+ #seckillId")
