@@ -18,7 +18,9 @@ public interface SeckillDao {
      * @return 影响的sql行数
      * @Param(valuue="xml中参数名称")
      */
-    int reduceNumber(@Param(value = "seckillId") long seckillId,@Param(value = "killTime") Date killTime);
+    int reduceNumber(
+            @Param("seckillId") long seckillId,
+            @Param("killTime") Date killTime);
 
     /**
      * 查询
@@ -29,10 +31,7 @@ public interface SeckillDao {
 
     /**
      * 偏移量查询
-     * @param offset
-     * @param limit
-     * @return
      */
-    List<Seckill> queryAll(@Param(value ="offset" ) int offset, @Param(value = "limit") int limit);
+    List<Seckill> queryAll();
 
 }

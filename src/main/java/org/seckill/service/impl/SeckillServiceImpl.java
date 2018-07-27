@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class SeckillServiceImpl implements SeckillService {
     @Autowired
-    private SeckillDao seckillDao;
+    SeckillDao seckillDao;
     @Autowired
     private SuccessSeckilledDao successSeckilledDao;
     //Salt
@@ -33,7 +33,8 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public List<Seckill> getSeckillList() {
-        return seckillDao.queryAll(0,3);
+
+        return seckillDao.queryAll();
     }
 
     /**
@@ -62,8 +63,8 @@ public class SeckillServiceImpl implements SeckillService {
             System.out.println("seckill=null eturn new Exposer(false, seckillId);");
             return new Exposer(false, seckillId);
         }
-        Date startTime = seckill.getStart_time();
-        Date endTime = seckill.getEnd_time();
+        Date startTime = seckill.getStartTime();
+        Date endTime = seckill.getEndTime();
         Date nowTime = new Date();
         // 未到时间或者超过结束时间
         if(nowTime.getTime() < startTime.getTime()
@@ -98,9 +99,10 @@ public class SeckillServiceImpl implements SeckillService {
         if(md5 == null || !md5.equals(getMD5(seckillId))){
             throw new SeckillException("seckill data rewrite");
         }
+        System.out.println("===========" + seckillId);
         //执行秒杀逻辑: 减少库存 + 记录购买行为
         Date nowTime = new Date();
-        try {
+//        try {
             //记录购买行为
             int insertConunt = this.successSeckilledDao.insertSuccessKilled(seckillId, userPhone);
             if (insertConunt <= 0) {
@@ -118,16 +120,16 @@ public class SeckillServiceImpl implements SeckillService {
                     return new SeckillExecution(seckillId, SeckillStateEnum.SUCCESS, successSeckilled);
                 }
             }
-        }catch (SeckillCloseException e1){
-            throw e1;
-        }catch (RepeatKillException e2){
-            throw e2;
-        }catch (Exception e) {
-            e.printStackTrace();
-            //所有编译器异常 转换为运行期异常
-            throw new SeckillException("seckill inner error" + e.getMessage());
+//        }catch (SeckillCloseException e1){
+//            throw e1;
+//        }catch (RepeatKillException e2){
+//            throw e2;
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            //所有编译器异常 转换为运行期异常
+//            throw new SeckillException("seckill inner error" + e.getMessage());
 
-        }
+//        }
     }
 
     /**

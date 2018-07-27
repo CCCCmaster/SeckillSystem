@@ -6,16 +6,16 @@ CREATE DATABASE seckill;
 USE seckill;
 -- 建立秒杀库存表
 CREATE  TABLE seckill(
-  seckill_id INT NOT NULL  AUTO_INCREMENT COMMENT '商品库存id',
-  goods_name VARCHAR(120) NOT NULL COMMENT '商品名称',
+  seckillId INT NOT NULL  AUTO_INCREMENT COMMENT '商品库存id',
+  goodsName VARCHAR(120) NOT NULL COMMENT '商品名称',
   number int NOT NULL COMMENT '库存数量',
-  start_time TIMESTAMP NOT NULL  COMMENT '秒杀开启时间',
-  end_time TIMESTAMP NOT NULL  COMMENT '结束时间',
-  create_time TIMESTAMP NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (seckill_id),
-  KEY  idx_start_time(start_time),
-  KEY idx_end_time(end_time),
-  key idx_create_time(create_time)
+  startTime TIMESTAMP NOT NULL  COMMENT '秒杀开启时间',
+  endTime TIMESTAMP NOT NULL  COMMENT '结束时间',
+  createTime TIMESTAMP NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (seckillId),
+  KEY  idx_start_time(startTime),
+  KEY idx_end_time(endTime),
+  key idx_create_time(createTime)
 )ENGINE =InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET =utf8 COMMENT ='秒杀库存表';
 
 -- 初始数据
@@ -28,10 +28,10 @@ CREATE  TABLE seckill(
 -- 用户登陆认证相关的信息
 
 CREATE  TABLE success_killed(
-  seckill_id INT NOT NULL  COMMENT '秒杀商品id',
-  user_phone INT NOT NULL  COMMENT '用户手机号',
+  seckillId INT NOT NULL  COMMENT '秒杀商品id',
+  userPhone INT NOT NULL  COMMENT '用户手机号',
   state INT NOT NULL  DEFAULT -1 COMMENT '状态标识： -1 无效 0 成功 1 已付款',
-  create_time TIMESTAMP NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (seckill_id, user_phone), /* 联合主键*/
-  KEY idx_create_time (create_time)
+  createTime TIMESTAMP NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (seckillId, userPhone), /* 联合主键*/
+  KEY idx_create_time (createTime)
 )ENGINE =InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET =utf8 COMMENT ='秒杀成功明细表';

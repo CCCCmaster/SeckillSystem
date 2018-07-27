@@ -15,27 +15,27 @@ import java.util.Date;
 public class Seckill implements Serializable{
 
     private static final long serialVersionUID = 697742643848374753L;
-    private long seckill_id;
-    private String goods_name;
+    private long seckillId;
+    private String goodsName;
     private int num;
-    private Date start_time;
-    private Date end_time;
-    private Date create_time;
+    private Date startTime;
+    private Date endTime;
+    private Date createTime;
 
-    public long getSeckill_id() {
-        return seckill_id;
+    public long getSeckillId() {
+        return seckillId;
     }
 
-    public void setSeckill_id(long seckill_id) {
-        this.seckill_id = seckill_id;
+    public void setSeckillId(long seckillId) {
+        this.seckillId = seckillId;
     }
 
-    public String getGoods_name() {
-        return goods_name;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setGoods_name(String goods_name) {
-        this.goods_name = goods_name;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
     public int getNum() {
@@ -46,39 +46,39 @@ public class Seckill implements Serializable{
         this.num = num;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
         return "Seckill{" +
-                "seckill_id=" + seckill_id +
-                ", goods_name='" + goods_name + '\'' +
+                "seckillId=" + seckillId +
+                ", goodsName='" + goodsName + '\'' +
                 ", num=" + num +
-                ", start_time=" + start_time +
-                ", end_time=" + end_time +
-                ", create_time=" + create_time +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", createTime=" + createTime +
                 '}';
     }
 }

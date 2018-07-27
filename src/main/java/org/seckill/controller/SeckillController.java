@@ -1,4 +1,4 @@
-package org.seckill.web;
+package org.seckill.controller;
 
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
@@ -9,8 +9,6 @@ import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
 import org.seckill.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -20,8 +18,8 @@ import java.util.List;
 /**
  * 秒杀活动相关接口
  */
-@Controller
-@RequestMapping(value = "/operate") //
+@RestController
+@RequestMapping(value = "/goods") //
 public class SeckillController {
 
     @Autowired
@@ -29,34 +27,30 @@ public class SeckillController {
 
     /**
      * 秒杀商品列表
-     * @param model
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model){
+    @ResponseBody
+    public List<Seckill> list(){
         List<Seckill> list = this.seckillService.getSeckillList();
-        System.out.println(list.get(0));
-        model.addAttribute("list", list);
-        return "list";
+        return list;
     }
 
     /**
      * 获取商品详细信息
+     *
      * @param seckillId
-     * @param model
      * @return
      */
     @RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET)
-    public String detail(@PathVariable("seckillId") Long seckillId, Model model){
-        if(seckillId == null){
-            return "redirect:/seckill/list";
+    public Seckill detail(@PathVariable("seckillId") Long seckillId) {
+        Seckill seckill = null;
+        if (seckillId == null) {
+            return seckill;
         }
-        Seckill seckill = this.seckillService.getById(seckillId);
-        if(seckill == null){
-            return "forward:/seckill/list";
-        }
-        model.addAttribute("seckill", seckill);
-        return "detail";
+        seckill = this.seckillService.getById(seckillId);
+        return seckill;
+
     }
 
     /**
@@ -96,6 +90,7 @@ public class SeckillController {
         if(phone == null ){
             return new SeckillResult<SeckillExecution>(false, "未注册" );
         }
+        System.out.println("seckillId: "+seckillId);
         SeckillResult<SeckillExecution> result = null ;
         try{
             SeckillExecution execution = this.seckillService.executeSeckill(seckillId, phone, md5);
@@ -127,7 +122,6 @@ public class SeckillController {
     public SeckillResult<Long> time(){
         Date now = new Date();
         return new SeckillResult<Long>(true, now.getTime());
-
     }
 
 }

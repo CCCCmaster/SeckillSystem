@@ -22,10 +22,9 @@
     </select>
     <!--    查询所有秒杀活动    -->
     <select id="queryAll" resultType="org.seckill.entity.Seckill" >
-        select seckill_id , goods_name, number as num, start_time, end_time, create_time
+        select seckill_Id , goods_name, number as num, start_time, end_time, create_time
         from seckill
         ORDER BY create_time DESC
-        LIMIT  #{offset} , #{limit}
     </select>
 
 </mapper>

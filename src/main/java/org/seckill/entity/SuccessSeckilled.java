@@ -1,35 +1,34 @@
 package org.seckill.entity;
 
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
-import java.sql.DatabaseMetaData;
 import java.util.Date;
 
 /**
  * 成功秒杀实体类
  */
-@ComponentScan
+@Component
 public class SuccessSeckilled {
-    private long seckill_id;
-    private long user_phone;
+    private long seckillId;
+    private long userPhone;
     private short state;
-    private Date create_time;
+    private Date createTime;
     private Seckill seckill;
 
-    public long getSeckill_id() {
-        return seckill_id;
+    public long getSeckillId() {
+        return seckillId;
     }
 
-    public void setSeckill_id(long seckill_id) {
-        this.seckill_id = seckill_id;
+    public void setSeckillId(long seckillId) {
+        this.seckillId = seckillId;
     }
 
-    public long getUser_phone() {
-        return user_phone;
+    public long getUserPhone() {
+        return userPhone;
     }
 
-    public void setUser_phone(long user_phone) {
-        this.user_phone = user_phone;
+    public void setUserPhone(long userPhone) {
+        this.userPhone = userPhone;
     }
 
     public short getState() {
@@ -40,12 +39,12 @@ public class SuccessSeckilled {
         this.state = state;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Seckill getSeckill() {
@@ -59,10 +58,10 @@ public class SuccessSeckilled {
     @Override
     public String toString() {
         return "SuccessSeckilled{" +
-                "seckill_id=" + seckill_id +
-                ", user_phone=" + user_phone +
+                "seckillId=" + seckillId +
+                ", userPhone=" + userPhone +
                 ", state=" + state +
-                ", create_time=" + create_time +
+                ", createTime=" + createTime +
                 ", sckill=" + seckill +
                 '}';
     }

@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 import org.seckill.entity.SuccessSeckilled;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.security.PermitAll;
+
 @Mapper
 public interface SuccessSeckilledDao {
     /**
@@ -13,13 +15,17 @@ public interface SuccessSeckilledDao {
      * @param userPhone
      * @return 影响的sql行数,即插入的数量
      */
-    int insertSuccessKilled(@Param(value = "seckillId") long seckillId, @Param(value = "userPhone") long userPhone);
+    int insertSuccessKilled(
+            @Param("seckillId") long seckillId,
+            @Param("userPhone") long userPhone);
 
     /**
      * 根据id, 用户手机号码查询SuccessKilled并携带秒杀产品对象实体
      * @param seckillId
      * @return
      */
-    SuccessSeckilled queryByIdWithSeckill(@Param(value = "seckillId") long seckillId, @Param(value = "userPhone") long userPhone);
+    SuccessSeckilled queryByIdWithSeckill(
+            @Param("seckillId") long seckillId,
+            @Param("userPhone") long userPhone);
 
 }

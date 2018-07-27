@@ -13,7 +13,7 @@ CREATE PROCEDURE  `seckill`.`execute_seckill`
     DECLARE insert_count int DEFAULT  0;
     START TRANSACTION ;
     INSERT IGNORE INTO success_killed
-    (seckill_id, user_phone, create_time)
+    (seckillId, userPhone, createTime)
       VALUES (v_seckill_id, v_phone, v_kill_time);
     SELECT  row_count() INTO insert_count;
     IF  (insert_count=0) THEN
@@ -25,9 +25,9 @@ CREATE PROCEDURE  `seckill`.`execute_seckill`
     ELSE
       UPDATE  seckill
         set number = number - 1
-      WHERE seckill_id = v_seckill_id
-        AND end_time > v_kill_time
-        AND start_time < v_kill_time
+      WHERE seckillId = v_seckill_id
+        AND endTime > v_kill_time
+        AND startTime < v_kill_time
         AND number > 0;
       SELECT row_count() into insert_count;
       IF (insert_count = 0) THEN
