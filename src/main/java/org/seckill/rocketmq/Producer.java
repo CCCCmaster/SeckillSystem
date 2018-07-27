@@ -1,19 +1,18 @@
 package org.seckill.rocketmq;
 
-import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 
 /**
  * Created by Idea
@@ -33,7 +32,7 @@ public class Producer {
     private String producerGroup;
 
     @Value("${rocketmq.namesrvAddr}")
-    private String namearvAddr;
+    private String namesrvAddr;
 
     /**
      * 消息生产者
@@ -43,7 +42,7 @@ public class Producer {
     public DefaultMQProducer getProducer(){
         DefaultMQProducer mqProducer = new
                 DefaultMQProducer(producerGroup);
-        mqProducer.setNamesrvAddr(namearvAddr);
+        mqProducer.setNamesrvAddr(namesrvAddr);
         try {
             mqProducer.start();
         } catch (MQClientException e) {
@@ -62,10 +61,9 @@ public class Producer {
     public static Message messageWrapper(String topic, String tags,
                                          Object info){
         byte[] byteArr = toByteArray(info);
-        Message msg = new Message(
+        return new Message(
                 topic, tags, byteArr
         );
-        return msg;
     }
 
     /**
