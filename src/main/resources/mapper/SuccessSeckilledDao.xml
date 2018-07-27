@@ -5,12 +5,12 @@
 
 <mapper namespace="org.seckill.dao.SuccessSeckilledDao">
     <!--    SuccessSeckilled对应的ResultMap -->
-    <resultMap id="selectSuccessedSeckill" type="SuccessSeckilled">
+    <resultMap id="selectSuccessedSeckill" type="org.seckill.entity.SuccessSeckilled">
         <result property="seckill_id" column="sk_id"/>
         <result property="user_phone" column="sk_user_phone"/>
         <result property="state" column="sk_state"/>
         <result property="create_time" column="sk_create_time"/>
-        <association property="seckill" javaType="Seckill">
+        <association property="seckill" javaType="org.seckill.entity.Seckill">
             <result property="seckill_id" column="s_id"/>
             <result property="goods_name" column="s_goods_name"/>
             <result property="num" column="s_num"/>
@@ -25,7 +25,7 @@
         INSERT ignore INTO success_killed(seckill_id, user_phone, state)
         VALUES (#{seckillId}, #{userPhone}, 0)
     </insert>
-    <select id="queryByIdWithSeckill" resultMap="selectSuccessedSeckill">
+    <select id="queryByIdWithSeckill" resultMap="org.seckill.entity.selectSuccessedSeckill">
         <!--根据主键id+username查询SuccessKilled并携带秒杀产品对象实体-
             复杂查询用ResultMap-->
         SELECT
