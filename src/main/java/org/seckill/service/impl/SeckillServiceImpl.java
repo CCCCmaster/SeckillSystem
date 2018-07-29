@@ -1,5 +1,10 @@
 package org.seckill.service.impl;
 
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessSeckilledDao;
 import org.seckill.dto.Exposer;
@@ -10,6 +15,7 @@ import org.seckill.enums.SeckillStateEnum;
 import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
 import org.seckill.exception.SeckillException;
+import org.seckill.rocketmq.Producer;
 import org.seckill.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,6 +30,9 @@ import java.util.List;
 
 @Service
 public class SeckillServiceImpl implements SeckillService {
+
+    @Autowired
+    DefaultMQProducer producer;
     @Autowired
     SeckillDao seckillDao;
     @Autowired
@@ -47,6 +56,13 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     @Cacheable(value = "cacheManager", key = "'seckill'+ #seckillId")
     public Seckill getById(long seckillId) {
+//        try {
+//            SendResult result = producer.send(Producer.messageWrapper
+//                    ("Test", "*", new String("info")));
+//            System.out.println(result.toString());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return seckillDao.queryById(seckillId);
     }
 

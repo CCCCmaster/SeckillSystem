@@ -4,9 +4,7 @@ import org.seckill.rocketmq.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * Created by Idea
@@ -18,7 +16,7 @@ import java.io.ObjectOutputStream;
 public class IOUtils {
     /* 日志 */
     private static final Logger logger = LoggerFactory.getLogger(
-            Producer.class
+            IOUtils.class
     );
     /**
      * 把对象转换为字节数组
@@ -28,7 +26,7 @@ public class IOUtils {
     public static byte[] toByteArray(Object o){
         ByteArrayOutputStream byteArrayOutputStream = new
                 ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream;
+        ObjectOutputStream objectOutputStream = null;
         try {
             objectOutputStream = new
                     ObjectOutputStream(byteArrayOutputStream);
@@ -36,7 +34,37 @@ public class IOUtils {
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }
-        return byteArrayOutputStream.toByteArray();
+        byte[] arr = byteArrayOutputStream.toByteArray();
+        try {
+            if(objectOutputStream != null){
+                objectOutputStream.close();
+            }
+            byteArrayOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+
+    public static Object readObj(byte[] body){
+        Object obj = null;
+        ByteArrayInputStream os = new ByteArrayInputStream(body);
+        ObjectInputStream oos = null;
+        try {
+            oos = new ObjectInputStream(os);
+            obj = oos.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if(oos != null){
+                oos.close();
+            }
+            os.close();
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+        return obj;
     }
 
 }
